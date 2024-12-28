@@ -1,11 +1,35 @@
 import { defineConfig } from 'vitepress'
-import path from 'path';
+import { chineseSearchOptimize, pagefindPlugin } from 'vitepress-plugin-pagefind'
 
+// function chineseSearchOptimize(input: string) {
+//   const segmenter = new Intl.Segmenter('zh-CN', { granularity: 'word' })
+//   const result: string[] = []
+//   for (const it of segmenter.segment(input)) {
+//     if (it.isWordLike) {
+//       result.push(it.segment)
+//     }
+//   }
+//   return result.join(' ')
+// }
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  lang: 'zh-cn',
   base: '/ysyx-docs-content/',
   title: "Lzzs",
+  vite: {
+    plugins: [pagefindPlugin({
+      customSearchQuery: chineseSearchOptimize,
+      btnPlaceholder: '搜索',
+      placeholder: '搜索文档',
+      emptyText: '空空如也',
+      heading: '共: {{searchResult}} 条结果',
+      filter(searchItem, idx, originArray) {
+        console.log(searchItem)
+        return !searchItem.route.includes('404')
+      }
+    })],
+  },
   description: "A VitePress Site ,for Lzzs CS000 Notebook",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
