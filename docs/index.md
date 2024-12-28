@@ -1,115 +1,40 @@
-<!-- 
-<meta http-equiv="refresh" content="0; url=/md"> -->
-
-# VitePress
-
-由 Vite 和 Vue 驱动的静态站点生成器
-
-将 Markdown 变成优雅的文档，只需几分钟
-
-# VitePress 是什么？[](https://vitepress.dev/zh/guide/what-is-vitepress#what-is-vitepress)
-
-VitePress 是一个[静态站点生成器](https://en.wikipedia.org/wiki/Static_site_generator) (SSG)，专为构建快速、以内容为中心的站点而设计。简而言之，VitePress 获取用 Markdown 编写的内容，对其应用主题，并生成可以轻松部署到任何地方的静态 HTML 页面。
-
-只是想尝试一下？跳到[快速开始](https://vitepress.dev/zh/guide/getting-started)。
-
+---
+slug: /
+sidebar_position: 1
 ---
 
-# VitePress-template
+# 第六期"一生一芯"课程主页
 
-这是一个基于 [VitePress](https://vitepress.dev/) 的文档网站模板，包含以下功能和特点：
+* 课时: 每周六15:00~17:00
+  * [B站直播](https://live.bilibili.com/24416626) | [录播链接](https://space.bilibili.com/2107852263/channel/collectiondetail?sid=1523995)
 
-- 自定义 CSS 主题。
-- 包含 GitHub Actions 工作流，自动化部署到 GitHub Pages。
-- VitePress 路由由 `docs` 文件夹的文件结构自动生成。
+## 学习目标
 
-## 快速开始
+"一生一芯"将会培养大家的综合能力.
+大家完成学习之后, 将会对以下问题有一定的认识:
+1. 处理器是如何设计的?
+1. 程序是如何在计算机上运行的?
+1. 如何对处理器的性能进行优化?
+1. 如何使用/设计正确的工具高效地进行调试?
+1. 如何自己编写测试用例进行单元测试?
+1. RTL设计如何生成可流片的版图?
 
-### 1. 安装依赖
+我们将会引导大家设计一款RISC-V流水线处理器,
+并在自己设计的处理器上运行操作系统,
+在操作系统上运行真实游戏.
+达成指标的处理器将可以接入到SoC, 并获得流片机会.
 
-首先安装项目依赖：
+## 教学资源
 
-```bash
-npm install
-```
-
-### 2. 启动开发服务器
-
-运行以下命令启动本地开发服务器：
-
-```bash
-npm run docs:dev
-```
-
-开发服务器会默认运行在 `http://localhost:5173`，你可以在浏览器中访问。
-
-## 使用说明
-
-### 修改文档配置
-
-1. 打开
-
-   ```
-   docs/.vitepress/config.mjs
-   ```
-
-    文件，根据你的项目需求，修改以下内容：
-
-   - `title`：文档的标题。
-   - `description`：文档的描述信息。
-   - `themeConfig`：导航栏、侧边栏等配置。
-   - ...
-
-### 添加路由
-
-VitePress 会根据 `docs` 文件夹的目录结构自动生成路由。例如：
-
-- `docs/index.md` -> 路由 `/`
-- `docs/guide/getting-started.md` -> 路由 `/guide/getting-started`
-
-**注意**：需要手动在 `config.mjs` 的 `sidebar` 配置中添加相应的目录结构。
-
-示例：
-
-```javascript
-sidebar: [
-  {
-    text: '指南',
-    items: [
-      { text: '快速开始', link: '/guide/getting-started' },
-      { text: '配置', link: '/guide/configuration' }
-    ]
-  }
-]
-```
-
-## 部署
-
-此模板已集成 GitHub Actions 工作流，支持自动化部署到 GitHub Pages。
-
-### 步骤
-
-1. 在你的 GitHub 仓库中启用 Pages 功能，选择GitHub Actions 部署。
-2. 每次将代码推送到主分支后，GitHub Actions 会自动触发构建和部署流程。
-
-## 文件结构
-
-以下是项目的基本结构说明：
-
-```
-VitePress-template/
-├── docs/                   # 文档内容
-│   ├── .vitepress/         # VitePress 配置
-│   │   ├── config.mjs      # 文档的配置文件
-│   │   ├── theme/          # 自定义主题
-│   ├── index.md            # 首页内容
-│   ├──  ...         # 文档分类目录
-├── package.json            # 项目依赖和脚本
-├── README.md               # 项目说明文件
-```
-
-**修改主题**：可以通过修改 `docs/.vitepress/theme` 文件夹中的 CSS 文件来自定义样式。
-
-## 技术支持
-
-- VitePress 官方文档：<https://vitepress.dev/>
+* `时间`一栏是以小时为单位的预估完成时间
+  * 预估完成时间为`2`的内容, 一般没有相关的编程任务,
+    只有2小时的视频录播, 用于补充讲解相关知识
+  * 鉴于同学们的基础水平有高有低, 此处按照"中等水平"同学的能力来预估.
+    但这里的"中等水平"并不是指"程序设计课程总评80分以上",
+    而是指"学习心态端正, 编写过500行以上代码的单个程序, 并且懂得调试".
+  * 如果你是零基础的初学者, 你应该预期花费这个数字`2~3`倍的时间来完成学习.
+    不过你不必为此感到沮丧, 所谓"闻道有先后", 之所以其他同学学得快,
+    很大一部分原因是因为他们之前已经付出努力迈过了初学者的阶段.
+* 可点击图标跳转到相应资源
+* 完整的讲义可通过页面右上方导航栏查看
+* S阶段讲义内容仍然在🕊

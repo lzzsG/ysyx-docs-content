@@ -44,7 +44,7 @@ export default defineConfig({
         "items": [
           {
             "text": "index",
-            "link": "/zh/index"
+            "link": "/index"
           },
           {
             "text": "preliminary",
