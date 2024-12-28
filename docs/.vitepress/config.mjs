@@ -31,13 +31,6 @@ export default defineConfig({
         ]
       },
     ],
-
-    resolve: {
-      alias: {
-        '/ysyx-img/': path.resolve(__dirname, '../ysyx-img/'), // 指向 docs/ysyx-img 目录
-      },
-    },
-
     logo: '/favicon.svg',  // 替换为你的logo
     // siteTitle: '----',  // 可自定义标题，不设置则默认为title
 
