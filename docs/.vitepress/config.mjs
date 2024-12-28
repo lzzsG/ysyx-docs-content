@@ -1,8 +1,10 @@
 import { defineConfig } from 'vitepress'
+import path from 'path';
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/VitePress-template/',
+  base: '/ysyx-docs-content/',
   title: "Lzzs",
   description: "A VitePress Site ,for Lzzs CS000 Notebook",
   themeConfig: {
@@ -29,6 +31,12 @@ export default defineConfig({
         ]
       },
     ],
+
+    resolve: {
+      alias: {
+        '/ysyx-img/': path.resolve(__dirname, '../ysyx-img/'), // 指向 docs/ysyx-img 目录
+      },
+    },
 
     logo: '/favicon.svg',  // 替换为你的logo
     // siteTitle: '----',  // 可自定义标题，不设置则默认为title
