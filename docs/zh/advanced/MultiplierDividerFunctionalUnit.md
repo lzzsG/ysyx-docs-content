@@ -5,9 +5,12 @@ sidebar_position: 8
 
 :::info
 [视频录播和课件]
+
 * 录播 - [功能单元设计](https://www.bilibili.com/video/BV1ET411m7cZ/)
 * 课件 - [功能单元设计](https://ysyx.oscc.cc/slides/2205/20.html#/)
+
 :::
+
 ### 概述
 
 出于面积和成本的限制，建议同学们乘除法器各实现两种，可以通过宏定义实现两种乘除法器的切换，一种是简单的移位乘除法器，一种是高性能的乘除法器。高性能是通过面积换时间，而且高性能往往比较复杂，建议大家有时间之后才考虑高性能。
@@ -56,7 +59,7 @@ sidebar_position: 8
 
 以两个32位数的乘法为例子
 
-#### 一位移位乘法器（移位加）的实现 
+#### 一位移位乘法器（移位加）的实现
 
 将乘法结果设置为零，并将被乘数存入一个 64 bits 寄存器的低 32 bits 中（非 GPR )，将乘数存入一个 32 bits 寄存器中。
 
@@ -109,7 +112,7 @@ $$
 - y_2 * 2 ^ 2
 - y_1 * 2 ^ 1
 - y_0 * 2 ^ 0
-\nonumber \\ 
+\nonumber \\
 &
 + y_6 * 2 ^ 7
 + y_5 * 2 ^ 6
@@ -261,13 +264,11 @@ assign sel_double_positive = ~y_add &  y &  y_sub;
 3.为什么要把 32 bits 数转换为 34 bits数？ 转换成  33bits 数行吗？
 :::
 
-
-
 1. 乘法开始的时候需要在乘数的最右边补一个零，把结果全部置零。
 2. 将乘数的最低 3bits 和被乘数的 68bits 输入到部分积生成模块，把部分积生成模块生成的数与结果用 68bits 加法器相加，并把和暂存到结果寄存器中，并把乘数右移两位，把被乘数左移两位。
 3. 重复上面的步骤，直至 34bits 的乘数全部为零。
 
-![image](/ysyx-img/zh/advanced/Cache/2.8_booth.png)
+![image](/ysyx-img/zh/advanced/Cache-image/2.8_booth.png)
 
 注意:由于两位 booth 每次需要扫描三位乘数，此时不能只扩展一位符号位，只能扩展两位符号位。
 
@@ -281,6 +282,7 @@ assign sel_double_positive = ~y_add &  y &  y_sub;
 
 2.除法器有没有类似于华莱士树一样的能完全并行的计算方法？
 :::
+
 ##### 缺少的模块
 
 我们之前已经完成了 booth两位 的部分积模块。所以我们目前只差两个关键模块。
@@ -293,7 +295,7 @@ assign sel_double_positive = ~y_add &  y &  y_sub;
 
 17bits 华莱士树共有6层，使用了15个全加器。
 
-![image](/ysyx-img/zh/advanced/Cache/2.8_walloc_tree.png)
+![image](/ysyx-img/zh/advanced/Cache-image/2.8_walloc_tree.png)
 
 ```verilog
 //一位全加器
@@ -318,8 +320,6 @@ endmodule
 | cout_group | output | 输入到左边的华莱士树的进位输出，最左边的华莱士树的忽略即可   |
 | cout       | output | 输出到加法器的 src1                                          |
 | s          | output | 输出到加法器的 src2                                          |
-
-
 
 ```verilog
 module walloc_17bits(
@@ -372,7 +372,7 @@ endmodule
 
 下面是 32 bits walloc X booth的示意图
 
-![image](/ysyx-img/zh/advanced/Cache/2.8_walloc_X_booth.png)
+![image](/ysyx-img/zh/advanced/Cache-image/2.8_walloc_X_booth.png)
 
 #### 时序问题
 
@@ -390,7 +390,7 @@ endmodule
 
 除法器依据是否将源操作数转换为绝对值分成绝对值除法器和补码除法器。绝对值除法器最后得到的是商和余数的绝对值，最后需要计算一下商和余数的补码；补码除法器最后的结果是补码，但是存在多减多除的情况，需要对余数进行调整。
 
-简单的迭代除法是试商法。 依据迭代过程中，在不够减时（商为 0），是否恢复余数分为：恢复余数法（循环减法），不恢复余数法（加减交替）。 
+简单的迭代除法是试商法。 依据迭代过程中，在不够减时（商为 0），是否恢复余数分为：恢复余数法（循环减法），不恢复余数法（加减交替）。
 
 ##### 迭代主要步骤和操作
 
@@ -411,8 +411,8 @@ endmodule
 
 1. **将被除数前面补32个0， 记为A[63:0]，记除数为B[31:0]，得到的商记为S[31:0]， 余数即为 R[31:0] .**
 2. **第一次迭代，取 A 的高 33 位，即 A[63:31]，与 B 高位补 0 的结果\{1'b0,B[31:0]\}做减法：如 果结果为负数，则商的相应位(S[31])为 0，被除数保持不变；如果结果为正数，则商的相应 位记为 1，将被除数的相应位(A[63:31])更新为减法的结果。**
-3. **随后进行第二次迭代，此时就需要取 A[62:30]与\{1'b0,B[31:0]\}作减法，依据结果更新 S[30]， 并更新 A[62:30]。** 
-4. **依此类推，直到算完第 0 位。** 
+3. **随后进行第二次迭代，此时就需要取 A[62:30]与\{1'b0,B[31:0]\}作减法，依据结果更新 S[30]， 并更新 A[62:30]。**
+4. **依此类推，直到算完第 0 位。**
 
 第3点中，依次取不同位置的33位数，在硬件上不太方便实现，可以考虑每周期把被除数的寄存器左移一位，由于移动的位数固定，相当于直接用连线实现。
 
@@ -422,12 +422,13 @@ endmodule
 
 此文章参考《CPU设计实战》第五章
 
-
-
 :::warning
 [在NPC中实现可配置的乘除法器]
+
 * 运行仙剑奇侠传，验证自己的乘除法器。
+
 :::
+
 ### 关于直接写 ”*“ 和 ”/“
 
 Q: 可以直接写  ”*“ 和 ”/“ 吗 ？
@@ -436,7 +437,7 @@ A: 这个是可以的，建议在搭建单周期 NPC 、流水框架和验证乘
 
 Q: 验证乘除法模块的怎么使用 ”*“ 和 ”/“  ？
 
-A: 如果你写的是 test bench的话，可以就像在C语言中直接用使用即可，这里有 32 bits 的[除法模块的test bench]( https://github.com/markaulunGH/alu/blob/master/div_model/base_div/div_tb.v) 和 32 bits 的 [乘法模块的 test bench](https://github.com/markaulunGH/alu/blob/master/mul_model/base_mul/mul_tb.v) 
+A: 如果你写的是 test bench的话，可以就像在C语言中直接用使用即可，这里有 32 bits 的[除法模块的test bench]( https://github.com/markaulunGH/alu/blob/master/div_model/base_div/div_tb.v) 和 32 bits 的 [乘法模块的 test bench](https://github.com/markaulunGH/alu/blob/master/mul_model/base_mul/mul_tb.v)
 
 ### 多周期乘除法器接入流水线
 
@@ -454,7 +455,7 @@ A: 如果你写的是 test bench的话，可以就像在C语言中直接用使�
 
 #### 除法器模块在流水线中的位置
 
-![image](/ysyx-img/zh/advanced/Cache/2.8_div_module.png)
+![image](/ysyx-img/zh/advanced/Cache-image/2.8_div_module.png)
 
 #### ALU中增加的信号
 
